@@ -6,7 +6,24 @@
       <Texts :data="posttext" />
       <Right @jump="chuan" />
     </div>
-
+    <div class="write">
+      <h5>评论</h5>
+      <el-input v-model="textvalue" placeholder="请输入内容"></el-input>
+      <div class="uploadbox">
+        <el-upload
+          action="https://jsonplaceholder.typicode.com/posts/"
+          list-type="picture-card"
+          :on-preview="handlePictureCardPreview"
+          :on-remove="handleRemove"
+        >
+          <i class="el-icon-plus"></i>
+        </el-upload>
+        <el-dialog :visible.sync="dialogVisible" size="tiny">
+          <img width="100%" :src="dialogImageUrl" alt />
+        </el-dialog>
+        <el-button type="primary">提交</el-button>
+      </div>
+    </div>
     <!-- 回复区 -->
     <div class="comment-box" v-for="(item,index) in postcomment" :key="index">
       <div class="comment">
@@ -16,7 +33,7 @@
           <span>2020-20-5</span>
           <div class="comment-num">{{index+1}}</div>
         </div>
-        <Comment :data='item.parent' v-if="item.parent"/>
+        <Comment :data="item.parent" v-if="item.parent" />
         <div class="comment-text">{{item.content}}</div>
         <div class="return">回复</div>
       </div>
@@ -62,14 +79,16 @@ export default {
       }
     }).then(res => {
       console.log(res);
-      this.postcomment = res.data.data
+      this.postcomment = res.data.data;
     });
   },
   data() {
     return {
       posttext: {},
-      postcomment:{
-      }
+      postcomment: {},
+      dialogImageUrl: "", //上传照片
+      dialogVisible: false, //上传照片
+      textvalue: "" //内容
     };
   },
   methods: {
@@ -82,6 +101,15 @@ export default {
       }).then(res => {
         this.posttext = res.data.data[0];
       });
+    },
+
+    //上传图片
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
     }
   }
 };
@@ -123,7 +151,7 @@ export default {
       padding: 0 7px;
       // margin-right: 520px;
     }
-    .comment-num{
+    .comment-num {
       flex: 1;
       text-align: right;
     }
@@ -138,5 +166,27 @@ export default {
     color: blue;
     cursor: pointer;
   }
+}
+
+// 评论编写区
+.write {
+  width: 1000px;
+  margin: 0 auto;
+  h5 {
+    font-size: 18px;
+    font-weight: normal;
+  }
+  .uploadbox{
+    display: flex;
+    .el-button.el-button--primary{
+      height: 40px;
+      margin-left: 485px
+    }
+  }
+}
+//更改输入框长度
+.el-input {
+  width: 700px;
+  margin: 15px 0;
 }
 </style>

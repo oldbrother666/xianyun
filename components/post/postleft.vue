@@ -4,25 +4,21 @@
     <div class="listbox" @mouseleave="leave">
       <ul class="hotcity-left">
         <li v-for="(item,index) in nav" :key="index" @mouseenter="active(index)">
-          <i v-text="item.type"></i>
-          <span class="el-icon-arrow-right"></span>
-          <!-- 右边 -->
-          <div class="hotcity-right-list" v-show="xian === index">
-            <p
-              v-for="(v,i) in item.children"
-              :key="i"
-              :class="{bordernones:isborder ===i}"
-            ><i>{{i + 1}}</i><span>{{v.city}}</span> {{v.desc}}</p>
+          <!-- 左边 -->
+          <div class="hotcity-li">
+            {{item.type}}
+            <span class="el-icon-arrow-right"></span>
+          </div>
+          <!-- 右边隐藏部分 -->
+          <div class="hotcity-hide"  v-if="xian == index"  @mouseenter="active2(index)" @mouseleave="returnborder(index)">
+            <div v-for="(value,i) in item.children" :key="i">
+              <span>{{i +1}}</span>
+              <strong>{{value.city}}</strong>
+              {{value.desc}}
+            </div>
           </div>
         </li>
       </ul>
-      <!-- <ul class="hotcity-right">
-          <li v-for="(item,index) in nav" :key="index" v-show="xian === index" @mouseenter="bordernone(index)" @mouseleave="bordershow(index)">
-            <div class="hotcity-right-box" v-for="(v,i) in item.children" :key="i" >
-              <i>{{i + 1}}</i><span>{{v.city}}</span> {{v.desc}}
-            </div>
-          </li>
-      </ul>-->
     </div>
 
     <h3>推荐城市</h3>
@@ -38,9 +34,8 @@ export default {
   data() {
     return {
       nav: ["热门城市", "推荐城市", "奔向海岛", "主题推荐"],
-      xian: "",
-      url: "/images/pic_sea.jpeg",
-      isborder: ""
+      xian: "8",
+      url: "/images/pic_sea.jpeg"
     };
   },
   created() {
@@ -53,21 +48,26 @@ export default {
     // console.log(this.$axios.defaults.baseURL)
   },
   methods: {
+    //悬停显示右边信息
     active(index) {
       this.xian = index;
-      console.log(index);
-      this.isborder = index;
+      // console.log(index);
     },
+    // 离开隐藏右边信息
     leave() {
-      this.xian = "";
+      this.xian = "8";
     },
-    bordernone(index) {
-      const a = document.querySelectorAll(".hotcity-left>li");
-      a[index].style.borderRightStyle = "none";
+    // 悬停更改边框右边颜色
+    active2(index){
+      const a = document.querySelectorAll('.hotcity-li')
+      a[index].style.borderRight = '1px solid white'
+      a[index].style.color = '#ffa500'
     },
-    bordershow(index) {
-      const a = document.querySelectorAll(".hotcity-left>li");
-      a[index].style.borderRightStyle = "ridge";
+    // 离开更改边框右边颜色
+    returnborder(index){
+      const a = document.querySelectorAll('.hotcity-li')
+      a[index].style.borderRight = '1px solid #dddddd'
+      a[index].style.color = 'black'
     }
   }
 };
@@ -82,73 +82,55 @@ img {
 }
 // 列表
 .listbox {
-  border-top: 1px solid #dddddd;
-  border-left: 1px solid #dddddd;
-  position: relative;
   width: 280px;
-  height: 165px;
+  position: relative;
+  z-index: 5;
   .hotcity-left {
-    z-index: 100;
-    position: absolute;
-    border-bottom: 1px #dddddd solid;
-    border-right: 1px #dddddd solid;
-    left: 0;
-    top: 0px;
-    width: 280px;
-    background: white;
-    > li {
+    border-left: 1px #dddddd solid;
+    border-top: 1px solid #dddddd;
+    .hotcity-li {
       display: flex;
       justify-content: space-between;
-      height: 41px;
-      align-items: center;
-      padding: 0 15px;
+      padding: 10px 20px;
       border-bottom: 1px solid #dddddd;
-      // border-right: 1px solid #dddddd;
-    }
-    > li:hover {
-      border-right: 1px solid white;
-      color: #ffa500;
-    }
-
-    > li:last-child {
-      border-bottom: none;
-    }
-  }
-
-  .hotcity-right-list {
-    position: absolute;
-    left: 279px;
-    top: -1px !important;
-    z-index: 1;
-    width: 350px;
-    height: 202px;
-    top: 0;
-    > p {
-      line-height: 41px;
-      width: 100%;
-      background: white;
       border-right: 1px solid #dddddd;
-      border-left: 1px solid #dddddd;
-      border-bottom: 1px solid white;
-      color: #999999;
-      padding: 0 15px;
+      z-index: 100;
+      background: white;
+      font-size: 14px;
+    }
+    .hotcity-li:hover {
+      border-right: 1px white solid!important;
+      color: #ffa500!important
+    }
+    .hotcity-hide {
+      position: absolute;
       box-sizing: border-box;
-      i{
-        // font-size: 24px;
-        font-style: italic;
-        color:#ffa500;
-        margin-right: 6px;
+      border: 1px solid #dddddd;
+      top: 0;
+      left: 279px;
+      width: 350px;
+      height: 220px;
+      background: white;
+      z-index: -1;
+      padding: 15px;
+      div {
+        margin-bottom: 5px;
+        color: #999999;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        span {
+          font-size: 24px;
+          font-style: italic;
+          color: #ffa500
+        }
+        strong{
+          font-size: 14px;
+          color: #ffa500;
+          margin: 0 10px;
+          font-weight: normal;
+        }
       }
-      span{
-        color:#ffa500;
-        margin-right: 10px
-      }
-    }
-    > p:last-child {
-      border-bottom: 1px solid #dddddd;
-    }
-    > p:nth-child(1) {
-      border-top: 1px solid #dddddd!important;
     }
   }
 }
@@ -166,8 +148,5 @@ h3 {
 // 显示隐藏列表
 .show {
   display: block;
-}
-.bordernones {
-  border-left: 1px solid white !important;
 }
 </style>

@@ -29,20 +29,43 @@
           end-placeholder="离店日期"
           @blur="a"
         ></el-date-picker>
+        <!-- 选择人数 -->
+        <el-input
+          placeholder="人数未定"
+          suffix-icon="el-icon-date"
+          v-model="person"
+          readonly
+          class="person"
+        ></el-input>
+        <div class="person-box">
+          <div class="person-box-top">
+            每间
+            <el-select v-model="value" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+                style="color:#f00"
+              ></el-option>
+            </el-select>
+          </div>
+        </div>
       </div>
-<el-checkbox v-model="checked">备选项</el-checkbox>
-<el-dropdown trigger="click">
-      <span class="el-dropdown-link">
-        下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
-      </span>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>黄金糕</el-dropdown-item>
-        <el-dropdown-item>狮子头</el-dropdown-item>
-        <el-dropdown-item>螺蛳粉</el-dropdown-item>
-        <el-dropdown-item>双皮奶</el-dropdown-item>
-        <el-dropdown-item>蚵仔煎</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
+      <el-checkbox v-model="checked">备选项</el-checkbox>
+      <el-dropdown trigger="click">
+        <span class="el-dropdown-link">
+          下拉菜单
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>黄金糕</el-dropdown-item>
+          <el-dropdown-item>狮子头</el-dropdown-item>
+          <el-dropdown-item>螺蛳粉</el-dropdown-item>
+          <el-dropdown-item>双皮奶</el-dropdown-item>
+          <el-dropdown-item>蚵仔煎</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
       <!-- 滑块过滤 -->
       <div class="input2">
         <div class="block">
@@ -55,66 +78,63 @@
         <div class="dropdown-box">
           <div class="dropdown1">
             <p>住宿等级</p>
-          <el-dropdown>
-            <span class="el-dropdown-link">
-              下拉菜单
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-checkbox v-model="checked">1</el-checkbox>
-              <el-checkbox v-model="checked">2</el-checkbox>
-              <el-checkbox v-model="checked">3</el-checkbox>
-              <el-checkbox v-model="checked">4</el-checkbox>
-              <el-checkbox v-model="checked">5</el-checkbox>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </div>
-        <div class="dropdown1">
+            <el-dropdown>
+              <span class="el-dropdown-link">
+                下拉菜单
+                <i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-checkbox v-model="checked">1</el-checkbox>
+                <el-checkbox v-model="checked">2</el-checkbox>
+                <el-checkbox v-model="checked">3</el-checkbox>
+                <el-checkbox v-model="checked">4</el-checkbox>
+                <el-checkbox v-model="checked">5</el-checkbox>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
+          <div class="dropdown1">
             <p>住宿等级</p>
-          <el-dropdown>
-            <span class="el-dropdown-link">
-              下拉菜单
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>黄金糕</el-dropdown-item>
-              <el-dropdown-item>狮子头</el-dropdown-item>
-              <el-dropdown-item>螺蛳粉</el-dropdown-item>
-              <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-              <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </div>
-        <div class="dropdown1">
+            <el-dropdown>
+              <span class="el-dropdown-link">
+                下拉菜单
+                <i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>黄金糕</el-dropdown-item>
+                <el-dropdown-item>狮子头</el-dropdown-item>
+                <el-dropdown-item>螺蛳粉</el-dropdown-item>
+                <el-dropdown-item disabled>双皮奶</el-dropdown-item>
+                <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
+          <div class="dropdown1">
             <p>住宿等级</p>
-          <el-dropdown>
-            <span class="el-dropdown-link">
-              下拉菜单
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>黄金糕</el-dropdown-item>
-              <el-dropdown-item>狮子头</el-dropdown-item>
-              <el-dropdown-item>螺蛳粉</el-dropdown-item>
-              <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-              <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </div>
-        <div class="dropdown1">
+            <el-dropdown>
+              <span class="el-dropdown-link">
+                下拉菜单
+                <i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>黄金糕</el-dropdown-item>
+                <el-dropdown-item>狮子头</el-dropdown-item>
+                <el-dropdown-item>螺蛳粉</el-dropdown-item>
+                <el-dropdown-item disabled>双皮奶</el-dropdown-item>
+                <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
+          <div class="dropdown1">
             <p>住宿等级</p>
-          <el-dropdown>
-            <span class="el-dropdown-link">
-              下拉菜单
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-                
-            </el-dropdown-menu>
-          </el-dropdown>
+            <el-dropdown>
+              <span class="el-dropdown-link">
+                下拉菜单
+                <i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown"></el-dropdown-menu>
+            </el-dropdown>
+          </div>
         </div>
-        </div>
-        
       </div>
     </div>
     <Footer />
@@ -135,7 +155,8 @@ export default {
       value6: "", //日期
       hua: 4000, //滑块
       max_num: 4000, //滑块最大值
-      checked:''   //选择框
+      checked: "", //选择框
+      person: "" //人数
     };
   },
   methods: {
@@ -194,7 +215,22 @@ export default {
   .inputs {
   }
 }
-
+// 选择人数
+.person {
+  width: 221px;
+}
+//选择人数盒子
+.person-box {
+  width: 326px;
+  height: 123px;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(121%, 10%);
+  border: #edf0f6 1px solid;
+  background: white;
+  padding: 12px;
+}
 // 滑块部分
 .input2 {
   width: 1000px;
@@ -211,26 +247,25 @@ export default {
       float: right;
     }
   }
-  .dropdown1{
-
-    p{
-      margin-bottom: 5px
+  .dropdown1 {
+    p {
+      margin-bottom: 5px;
     }
-    .el-dropdown{
-    font-size: 13px;
-    color: #606266;
-    cursor: pointer;
-    flex: 1
+    .el-dropdown {
+      font-size: 13px;
+      color: #606266;
+      cursor: pointer;
+      flex: 1;
     }
   }
 }
-.dropdown-box{
-  display: flex
+.dropdown-box {
+  display: flex;
 }
-/deep/.el-checkbox__inner{
-  border-radius: 50%
+/deep/.el-checkbox__inner {
+  border-radius: 50%;
 }
-/deep/.el-dropdown-menu.el-popper{
-  width: 500px!important;
+/deep/.el-dropdown-menu.el-popper {
+  width: 500px !important;
 }
 </style>
